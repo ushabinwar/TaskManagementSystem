@@ -26,6 +26,7 @@ app.use(
 app.use(cookieparser());
 
 app.use("/" , require("./routes/userRoutes"))
+app.use("/task" , require("./routes/taskRoutes"))
 
 const PORT = process.env.PORT || 8080
 
