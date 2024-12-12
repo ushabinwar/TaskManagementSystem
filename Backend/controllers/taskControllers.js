@@ -96,6 +96,7 @@ module.exports.updateTask = async (req, res, next)=>{
       }
 }
 
+
 module.exports.deleteTask = async (req, res) => {
   try {
     const task = await taskModel.findById(req.params.id);

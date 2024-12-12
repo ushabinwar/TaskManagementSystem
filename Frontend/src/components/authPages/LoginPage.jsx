@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
+import API from "../../api";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -11,23 +15,25 @@ function LoginPage() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    console.log(formData)
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('')
 
     try {
       // API call to log the user in
-      const response = await axios.post("https://your-api-url/login", formData);
+      const response = await API.post("/login", formData);
+      console.log(response)
+       // Save token to localStorage
+       localStorage.setItem("authToken" , response.data.token)
+      toast.success("Login Successfully")
+      navigate('/dashboard')
 
-      if (response.status === 200) {
-        alert("Login successful!");
-        console.log("API Response:", response.data);
-        // You can redirect the user or handle the response here
-      }
-    } catch (error) {
-      console.error("Error calling API:", error);
-      setError(error.response?.data?.message || "Failed to connect to the server.");
+    } catch (err) {
+      console.error("Error calling API:", err);
+      setError(err.response?.data?.message || "Failed to connect to the server.");
     }
   };
 

@@ -16,7 +16,14 @@ exports.isAuthenticated = async(req, res, next)=>{
 
     try {
         //take Token from cookies 
-        const { token } = req.cookies;
+        // const { token } = req.cookies;
+        const authHeader = req.headers.authorization;
+        const token = authHeader?.startsWith("Bearer ")
+          ? authHeader.split(" ")[1]
+          : req.cookies.token; // if using cookies
+        
+        console.log("Token from headers:", authHeader);
+        console.log("Token from cookies:", req.cookies.token);
     
         
         if (!token) {

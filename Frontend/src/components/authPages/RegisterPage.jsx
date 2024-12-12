@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import API from "../../api"
+import { toast } from "react-toastify";
+
 
 function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -7,6 +11,8 @@ function RegisterPage() {
     password: "",
     confirmPassword: "",
   });
+  const [error, setError] = useState('')
+  const navigate =  useNavigate()
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,25 +27,19 @@ function RegisterPage() {
       alert("Passwords do not match!");
       return;
     }
-    // // Add your API call or logic here
-    // console.log("Form Submitted:", formData);
-    const { confirmPassword, ...dataToSend } = formData;
-    try {
-        // Making the API call using axios
-        const response = await axios.post("http://localhost:5000/register", dataToSend);
-  
-        // Handling successful response
-        if (response.status === 200) {
-          alert("Registration successful!");
-          console.log("API Response:", response.data);
-          // You can redirect or perform other actions based on response
-        }
-      } catch (error) {
-        // Handling error response
-        console.error("Error calling API:", error);
-        const errorMessage = error.response?.data?.message || "Failed to connect to the server.";
-        alert(errorMessage);
-      }
+
+    try{
+      const response = await API.post('/register', formData)
+      console.log(response, "registerd sucessfully")
+      toast.success("Register Successfully")
+      navigate("/login")
+
+    }catch(err){
+      setError(err.response?.data?.error || 'Registration failed');
+      toast.error(err.response.data.message || 'Registration failed')
+     
+    }
+    
   };
 
   return (

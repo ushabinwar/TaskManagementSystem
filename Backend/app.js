@@ -1,9 +1,11 @@
 const express = require("express");
 const app = express();
+const cors = require('cors');
 require("dotenv").config({path:"./.env"})
 const connectToDb = require("./db/db")
 connectToDb();
 
+app.use(cors());
 
 //logger
 const logger = require("morgan")
