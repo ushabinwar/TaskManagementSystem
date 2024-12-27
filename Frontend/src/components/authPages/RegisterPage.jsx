@@ -44,7 +44,7 @@ function RegisterPage() {
 
   return (
     <div className="bg-gray-100 flex items-center justify-center h-screen">
-      <div className="bg-white p-8 rounded shadow-lg w-full max-w-md">
+      <div className="bg-white p-8 mt-10  rounded shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
           Register
         </h2>

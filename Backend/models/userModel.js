@@ -34,7 +34,6 @@ userSchema.pre("save", function(){
   let salt = bcrypt.genSaltSync(10);
   this.password = bcrypt.hashSync(this.password, salt);
 });
-
 userSchema.methods.comparePassword = function(password){
   return bcrypt.compareSync(password, this.password);
 }
